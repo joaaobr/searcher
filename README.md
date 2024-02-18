@@ -6,27 +6,27 @@ Searcher is a study project with the objective of using VSM (Vector Space Model)
 
 #### The document table is a module used to store documents and transform them into lists of sentences.
 ```scala
-  val tableDocuments = new TableDocuments()
+  val documentTable = new DocumentTable()
 ```
 #### Then we insert the documents into the table:
 
 ```scala
-  tableDocuments.pushText("Hello World")
-  tableDocuments.pushText("Hello Guys")
-  tableDocuments.pushText("Hello Main")
-  tableDocuments.pushText("Hello Man Guys World")
-  tableDocuments.pushText("Hello hello")
-  tableDocuments.pushText("Hello guys guys hello hello guys hello")
+  documentTable.pushText("Hello World")
+  documentTable.pushText("Hello Guys")
+  documentTable.pushText("Hello Main")
+  documentTable.pushText("Hello Man Guys World")
+  documentTable.pushText("Hello hello")
+  documentTable.pushText("Hello guys guys hello hello guys hello")
 ```
 
 #### And then we insert the search vector:
 ```scala
-  tableDocuments.pushQuery("Hello Guys")
+  documentTable.pushQuery("Hello Guys")
 ```
 
 #### Execute the query:
 ```scala
-  println(tableDocuments.result())
+  println(documentTable.result())
 ```
 
 # Result:

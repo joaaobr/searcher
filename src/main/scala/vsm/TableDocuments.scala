@@ -11,7 +11,7 @@ case class SearchVectorResult(id: Int, vector: Double)
     This module is used to store documents and perform searches based on the vector space model.
 */
 
-class TableDocuments(documents: HashMap[Int, Seq[String]]) {
+class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     private var currentId: Int = 0
     private var query: Seq[String] = Seq()
     private var queryVector: Seq[Int] = Seq()

@@ -1,16 +1,16 @@
 import com.searcher.vsm._
 
 @main def hello(): Unit =
-  val tableDocuments = new TableDocuments()
+  val DocumentTable = new DocumentTable()
 
-  tableDocuments.pushText("Hello World")
-  tableDocuments.pushText("Hello Guys")
-  tableDocuments.pushText("Hello Main")
-  tableDocuments.pushText("Hello Man Guys World")
-  tableDocuments.pushText("Hello hello")
-  tableDocuments.pushText("Hello guys guys hello hello guys hello")
+  DocumentTable.pushText("Hello World")
+  DocumentTable.pushText("Hello Guys")
+  DocumentTable.pushText("Hello Main")
+  DocumentTable.pushText("Hello Man Guys World")
+  DocumentTable.pushText("Hello hello")
+  DocumentTable.pushText("Hello guys guys hello hello guys hello")
 
-  tableDocuments.pushQuery("Hello Guys")
+  DocumentTable.pushQuery("Hello Guys")
 
-  println(tableDocuments.result())
+  println(DocumentTable.result())
   
