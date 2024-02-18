@@ -20,7 +20,7 @@ class BloomFilter(size: Int, hashTable: BitBloom) {
         .map(seed => MurmurHash3.stringHash(str, seed))
         .reduce((a, b) => (a * b))
 
-        (math.abs(hash) + str.hashCode()) % size
+        math.abs(hash + str.hashCode()) % size
     }
 
     def add(str: String) = {
