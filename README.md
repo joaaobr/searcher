@@ -39,8 +39,3 @@ Searcher is a study project with the objective of using VSM (Vector Space Model)
  SearchVectorResult(6,0.9608279654492813)
 ```
 
-# Run
-```bash
-sbt run
-```
-
