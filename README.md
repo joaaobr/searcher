@@ -31,11 +31,11 @@ Searcher is a study project with the objective of using VSM (Vector Space Model)
 
 # Result:
 ```scala
- SearchVectorResult(1,0.2928932188134525)
- SearchVectorResult(2,0.7071067811865475)
- SearchVectorResult(3,0.2928932188134525)
- SearchVectorResult(4,0.4142135623730951)
- SearchVectorResult(5,0.6180339887498948)
- SearchVectorResult(6,0.9608279654492813)
+ SearchVectorResult(1, 0.6666666666666667)
+ SearchVectorResult(2, 1.0000000000000002)
+ SearchVectorResult(3, 0.6666666666666667)
+ SearchVectorResult(4, 0.8660254037844387)
+ SearchVectorResult(5, 0.8164965809277259)
+ SearchVectorResult(6, 0.8082903768654761)
 ```
 

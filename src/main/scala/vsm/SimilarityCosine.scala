@@ -6,6 +6,7 @@ package com.searcher.vsm
 
 object SimilarityCosine {
     private val SQUARE: Int = 2
+
     /*
         Example:
           input -> (1, 0, 1), (1, 1, 0)
@@ -18,17 +19,28 @@ object SimilarityCosine {
     def calculateSimilarityOfCosine(vector1: Seq[Int], vector2: Seq[Int]): Double = {
         val v1 = vector1
         .zip(vector2)
-        .toStream
         .map((x, y) => x * y)
         .reduce((x, y) => x + y)
 
-        val v2 = vector1
-        .zip(vector2)
-        .toStream
-        .map((x, y) => math.sqrt(math.pow(x, SQUARE) + math.pow(y, SQUARE)))
-        .reduce((x, y) => x + y)
+        /*
+            v2 ->
+            (2, 1), (0 ,1)
+        */
 
-        (v1 / v2)
+        val v2 = math.sqrt(
+            vector1
+            .map(x => math.pow(x, SQUARE))
+            .reduce((x, y) => x + y)
+        )
+
+        val v3 = math.sqrt(
+            vector2
+            .map(x => math.pow(x, SQUARE))
+            .reduce((x, y) => x + y)
+        )
+
+
+        (v1 / (v2 * v3))
     }
 
 
