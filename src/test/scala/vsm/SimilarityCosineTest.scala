@@ -1,19 +1,19 @@
 import com.searcher.vsm._
 
 class SimilarityCosineTest extends munit.FunSuite {
-  test("Test calculate similarity") {
+  test("Calculate similarity") {
     val result = SimilarityCosine.calculateSimilarityOfCosine(Seq(1, 1), Seq(1, 0))
     val expected = 0.7071067811865475
     assert(result == expected)
   }
 
-  test("Test calculate similarity are equals an 1") {
+  test("Calculate similarity are equals an 1") {
     val result = SimilarityCosine.calculateSimilarityOfCosine(Seq(1, 1), Seq(1, 1))
     val expected = 0.9999999999999998
     assert(result == expected)
   }
 
-  test("Test calculate nearest vector") {
+  test("Calculate nearest vector") {
     val vectors:Seq[SearchVector] = Seq(
       new SearchVector(1, Seq(0, 1, 1, 1)),
       new SearchVector(2, Seq(1, 0, 1, 0)),

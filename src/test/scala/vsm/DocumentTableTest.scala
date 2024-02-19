@@ -2,7 +2,7 @@ import com.searcher.vsm._
 
 class DocumentTableTest extends munit.FunSuite {
   
-  test("Test insert document and get result") {
+  test("Insert document and get result") {
     val table = new DocumentTable()
 
     table.pushText("This is failure")
@@ -18,7 +18,7 @@ class DocumentTableTest extends munit.FunSuite {
     assert(result == expected)
   }
 
-  test("Test insert document inconpatival") {
+  test("Insert document inconpatival") {
     val table = new DocumentTable()
     
     table.pushText("Document inconpatival")
