@@ -22,11 +22,6 @@ object SimilarityCosine {
         .map((x, y) => x * y)
         .reduce((x, y) => x + y)
 
-        /*
-            v2 ->
-            (2, 1), (0 ,1)
-        */
-
         val v2 = math.sqrt(
             vector1
             .map(x => math.pow(x, SQUARE))
