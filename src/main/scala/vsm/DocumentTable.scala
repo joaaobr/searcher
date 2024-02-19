@@ -18,7 +18,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
 
     def this() = this(new HashMap[Int, Seq[String]])
 
-    def incrementCurrentId = {
+    private def incrementCurrentId = {
         currentId += 1
     }
 
@@ -37,8 +37,8 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     def pushQuery(text: String) = {
         val document = new Document(text).splitDocumentToSpaces()
         incrementCurrentId
-        documents.put(-1, document)
         query = document
+        documents.put(-1, document)
     }
 
     /*
