@@ -12,5 +12,5 @@ import com.searcher.vsm._
 
   DocumentTable.pushQuery("Hello Guys")
 
-  println(DocumentTable.result().all())
+  DocumentTable.result().show()
   

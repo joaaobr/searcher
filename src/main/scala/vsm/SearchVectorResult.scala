@@ -19,4 +19,10 @@ class SearcherResult(result: Seq[SearchVectorResult]) {
     }
 
     def all(): Seq[SearchVectorResult] = result
+
+    def show() = {
+        println("Id  Similarity")
+        result
+        .map(x => println(x.id + "   " + x.value))
+    }
 }
