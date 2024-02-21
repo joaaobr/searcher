@@ -26,16 +26,17 @@ Searcher is a study project with the objective of using VSM (Vector Space Model)
 
 #### Execute the query:
 ```scala
-  println(documentTable.result().all())
+  documentTable.result().show()
 ```
 
 # Result:
 ```scala
- SearchVectorResult(1, 0.6666666666666667)
- SearchVectorResult(2, 1.0000000000000002)
- SearchVectorResult(3, 0.6666666666666667)
- SearchVectorResult(4, 0.8660254037844387)
- SearchVectorResult(5, 0.8164965809277259)
- SearchVectorResult(6, 0.8082903768654761)
+  Id  Similarity
+  1   0.6666666666666667
+  2   1.0000000000000002
+  3   0.6666666666666667
+  4   0.8660254037844387
+  5   0.8164965809277259
+  6   0.8082903768654761
 ```
 
