@@ -26,7 +26,7 @@ Searcher is a study project with the objective of using VSM (Vector Space Model)
 
 #### Execute the query:
 ```scala
-  println(documentTable.result())
+  println(documentTable.result().all())
 ```
 
 # Result:
