@@ -8,7 +8,10 @@ class Document(document: String) {
     def splitDocumentToSpaces(): Seq[String] = {
         document
         .toLowerCase()
+        .trim()
         .split(' ')
+        .filter(x => x.length >= 2)
         .toSeq
+        
     }
 }
