@@ -5,13 +5,12 @@ package com.searcher.vsm
 */
 
 class Document(document: String) {
-    def splitDocumentToSpaces(): Seq[String] = {
+    def clearAndSplit(): Seq[String] = {
         document
         .toLowerCase()
         .trim()
         .split(' ')
         .filter(x => x.length >= 2)
         .toSeq
-        
     }
 }

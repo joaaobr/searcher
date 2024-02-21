@@ -24,7 +24,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         Push to hash table with incremental id.
     */
     def pushText(text: String) = {
-        val document = new Document(text).splitDocumentToSpaces()
+        val document = new Document(text).clearAndSplit()
         incrementCurrentId
         documents.put(currentId, document)
     }
@@ -33,7 +33,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         Push to hash table with negative id.
     */
     def pushQuery(text: String) = {
-        val document = new Document(text).splitDocumentToSpaces()
+        val document = new Document(text).clearAndSplit()
         incrementCurrentId
         query = document
         documents.put(-1, document)
