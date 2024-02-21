@@ -1,11 +1,9 @@
 package com.searcher.vsm
 
 import scala.collection.mutable.HashMap
-import com.searcher.vsm.Document
+import com.searcher.vsm._
 
 case class SearchVector(id: Int, vector: Seq[Int])
-
-case class SearchVectorResult(id: Int, vector: Double)
 
 /*
     This module is used to store documents and perform searches based on the vector space model.
@@ -61,11 +59,11 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     /*
         Returns the similarity of the search vectors with the query.
     */
-    def result(): Seq[SearchVectorResult] = {
+    def result(): SearcherResult = {
         val spaceVector = getSearchVectors()
 
-        SimilarityCosine.calculateNearestVector(spaceVector, queryVector)
-        .filter(result => result.id > 0 && result.vector > 0)
-        .sortBy(x => x.vector)
+        val result = SimilarityCosine.calculateNearestVector(spaceVector, queryVector)
+        .filter(x => x.id > 0)
+        new SearcherResult(result)
     }
 }

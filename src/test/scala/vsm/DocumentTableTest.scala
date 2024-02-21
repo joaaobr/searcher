@@ -9,7 +9,7 @@ class DocumentTableTest extends munit.FunSuite {
     table.pushText("This is ok")
     table.pushQuery("This is ok")
 
-    val result = table.result()
+    val result = table.result().all()
     val expected = Seq(
       new SearchVectorResult(1, 0.6666666666666667),
       new SearchVectorResult(2, 1.0000000000000002)
@@ -24,9 +24,8 @@ class DocumentTableTest extends munit.FunSuite {
     table.pushText("Document inconpatival")
     table.pushQuery("Testing")
 
-    val result = table.result()
-    val expected = Seq()
-
+    val result = table.result().first()
+    val expected = new SearchVectorResult(1, 0.0)
     assert(result == expected)
   }
 }
