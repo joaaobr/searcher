@@ -20,9 +20,17 @@ class SearcherResult(result: Seq[SearchVectorResult]) {
 
     def all(): Seq[SearchVectorResult] = result
 
-    def show() = {
+    private def defaultShow(result: Seq[SearchVectorResult]) = {
         println("Id  Similarity")
         result
         .map(x => println(x.id + "   " + x.value))
+    }
+
+    def show() = {
+        defaultShow(result)
+    }
+
+    def showOrdened() = {
+        defaultShow(order())
     }
 }
