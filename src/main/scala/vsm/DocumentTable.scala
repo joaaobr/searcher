@@ -25,6 +25,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     */
     def pushText(text: String) = {
         val document = new Document(text).clearAndSplit()
+        println(document)
         incrementCurrentId
         documents.put(currentId, document)
     }

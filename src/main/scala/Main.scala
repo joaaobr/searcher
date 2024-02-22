@@ -5,9 +5,9 @@ import com.searcher.vsm._
   
   DocumentTable.pushText("Hello World")
   DocumentTable.pushFile("file-test")
-  DocumentTable.pushText("Hello, Guys")
+  DocumentTable.pushText("HèllÔ, Guys")
   DocumentTable.pushText("Hello Main")
-  DocumentTable.pushText("Hello Man Guys World")
+  DocumentTable.pushText("HÉllo Man Guys World")
   DocumentTable.pushText("Hello hello")
   DocumentTable.pushText("Hello guys guys hello hello guys hello")
 
