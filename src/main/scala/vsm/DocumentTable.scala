@@ -29,6 +29,14 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         documents.put(currentId, document)
     }
 
+    def pushFile(file: String) = {
+        val document = new DocumentFile(file)
+        .read()
+        
+        incrementCurrentId
+        documents.put(currentId, document)
+    }
+
     /*
         Push to hash table with negative id.
     */
