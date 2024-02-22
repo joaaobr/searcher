@@ -9,6 +9,7 @@ class Document(document: String) {
         document
         .toLowerCase()
         .trim()
+        .replaceAll("\\p{Punct}", "")
         .split(' ')
         .filter(x => x.length >= 2)
         .toSeq

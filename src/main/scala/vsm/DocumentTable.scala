@@ -30,9 +30,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     }
 
     def pushFile(file: String) = {
-        val document = new DocumentFile(file)
-        .read()
-        
+        val document = new DocumentFile(file).read()
         incrementCurrentId
         documents.put(currentId, document)
     }
