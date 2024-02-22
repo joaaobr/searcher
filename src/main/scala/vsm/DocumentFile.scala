@@ -13,7 +13,7 @@ class DocumentFile(file: String) {
     val stream = Files.lines(Paths.get(file))
     stream
     .filter(x => x.length >= 2)
-    .map(x => new Document(x).clearAndSplit())
+    .map(x => Document.clear(x))
     .reduce((x, y) => x ++ y)
     .get()
   }
