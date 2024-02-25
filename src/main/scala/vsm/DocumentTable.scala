@@ -21,6 +21,12 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         currentId += 1
     }
 
+    private def setQueryVector(searchVector: Set[String], query: Seq[String]) = {
+        queryVector = Phrases.compareVectors(searchVector, query)
+    }
+
+    private def getQuery(): Seq[String] = documents.get(-1).get
+
     /*
         Push to hash table with incremental id.
     */
@@ -45,9 +51,6 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         documents.put(-1, document)
     }
 
-    private def setQueryVector(searchVector: Set[String], query: Seq[String]) = {
-        queryVector = Phrases.compareVectors(searchVector, query)
-    }
 
     /*
         Based on the hash table, it creates a search vector and returns comparisons
@@ -59,7 +62,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         .reduce((a, b) => a ++ b)
         .toSet
 
-        val query = documents.get(-1).get
+        val query = getQuery()
 
         setQueryVector(searchVector, query)
 
@@ -75,15 +78,16 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     def getComparisonVectors(): Seq[ComparisonVectors] = {
         documents
         .map((id, document) => 
-            val query = documents.get(-1).get
+            val query = getQuery()
             val vectorSearch = (document ++ query).toSet
-
+            
             new ComparisonVectors(
                 id, 
                 Phrases.compareVectors(vectorSearch, document),
                 Phrases.compareVectors(vectorSearch, query)
             )
-        ).toSeq
+        )
+        .toSeq
     }
 
     /*
@@ -93,14 +97,12 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     def resultComparisonVectors(): SearcherResult = {
         val spaceVector = getComparisonVectors()
 
-
         val result = spaceVector
         .map(x => new SearchVectorResult(
             x.id,
             SimilarityCosine.calculateSimilarityOfCosine(x.vectorSearch, x.query)
         ))
         .filter(vector => vector.id > 0)
-
         new SearcherResult(result)
     }
 
