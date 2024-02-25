@@ -11,8 +11,8 @@ class DocumentTableTest extends munit.FunSuite {
 
     val result = table.result().all()
     val expected = Seq(
-      new SearchVectorResult(1, 0.6666666666666667),
-      new SearchVectorResult(2, 1.0000000000000002)
+      SearchVectorResult(1, 0.6666666666666667),
+      SearchVectorResult(2, 1.0000000000000002)
     )
 
     assert(result == expected)
@@ -51,8 +51,8 @@ class DocumentTableTest extends munit.FunSuite {
     val result = table.result().all()
 
     val expected = Seq(
-      new SearchVectorResult(1, 0.19069251784911848),
-      new SearchVectorResult(2, 0.5645990940073806)
+      SearchVectorResult(1, 0.19069251784911848),
+      SearchVectorResult(2, 0.5645990940073806)
     )
 
     assert(result == expected)
@@ -68,8 +68,8 @@ class DocumentTableTest extends munit.FunSuite {
     val result = table.result().all()
 
     val expected = Seq(
-      new SearchVectorResult(1, 0.19069251784911848),
-      new SearchVectorResult(2, 0.5645990940073806)
+      SearchVectorResult(1, 0.19069251784911848),
+      SearchVectorResult(2, 0.5645990940073806)
     )
 
     assert(result == expected)
@@ -83,7 +83,7 @@ class DocumentTableTest extends munit.FunSuite {
     table.pushQueryFile("query-file-test")
 
     val result = table.result().all()
-    
+
     val expected = Seq(
       SearchVectorResult(1,0.3913968438320653),
       SearchVectorResult(2,0.0)
