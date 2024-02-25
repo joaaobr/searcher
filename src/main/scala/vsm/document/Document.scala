@@ -1,4 +1,4 @@
-package com.searcher.vsm
+package com.searcher.vsm.document
 
 import java.text.Normalizer
 import java.util.regex.Pattern

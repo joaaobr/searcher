@@ -1,5 +1,7 @@
 package com.searcher.vsm
 
+import com.searcher.vsm.document.SearchVector
+
 /*
     This module was created to handle VSM(Vector Space Model) calculations.
 */

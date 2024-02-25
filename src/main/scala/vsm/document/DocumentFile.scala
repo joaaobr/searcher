@@ -1,4 +1,5 @@
-package com.searcher.vsm
+package com.searcher.vsm.document
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.io.BufferedSource

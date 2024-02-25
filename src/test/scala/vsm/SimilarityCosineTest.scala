@@ -1,4 +1,5 @@
 import com.searcher.vsm._
+import com.searcher.vsm.document._
 
 class SimilarityCosineTest extends munit.FunSuite {
   test("Calculate similarity") {

@@ -1,4 +1,5 @@
 import com.searcher.vsm._
+import com.searcher.vsm.document.DocumentTable
 
 @main def hello(): Unit =
   val DocumentTable = new DocumentTable()

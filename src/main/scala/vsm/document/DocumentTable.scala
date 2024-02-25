@@ -1,4 +1,4 @@
-package com.searcher.vsm
+package com.searcher.vsm.document
 
 import scala.collection.mutable.HashMap
 import com.searcher.vsm._

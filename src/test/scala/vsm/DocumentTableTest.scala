@@ -1,3 +1,4 @@
+import com.searcher.vsm.document._
 import com.searcher.vsm._
 
 class DocumentTableTest extends munit.FunSuite {
