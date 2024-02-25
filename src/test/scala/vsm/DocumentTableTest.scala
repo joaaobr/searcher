@@ -29,4 +29,21 @@ class DocumentTableTest extends munit.FunSuite {
     val expected = new SearchVectorResult(1, 0.0)
     assert(result == expected)
   }
+
+  test("Read file") {
+    val table = new DocumentTable()
+    
+    table.pushText("Document inconpatival")
+    table.pushFile("file-test")
+    table.pushQuery("Now is the winter of our discontent Made glorious summer by this sun of York;")
+
+    val result = table.result().all()
+
+    val expected = Seq(
+      new SearchVectorResult(1, 0.19069251784911848),
+      new SearchVectorResult(2, 0.5645990940073806)
+    )
+    
+    assert(result == expected)
+  }
 }
