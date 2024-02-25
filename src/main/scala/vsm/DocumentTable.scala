@@ -5,6 +5,8 @@ import com.searcher.vsm._
 
 case class SearchVector(id: Int, vector: Seq[Int])
 
+case class ComparisonVectors(id: Int, vectorSearch: Seq[Int], query: Seq[Int])
+
 /*
     This module is used to store documents and perform searches based on the vector space model.
 */
@@ -61,6 +63,41 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         documents
         .map((x, y) => new SearchVector(x, Phrases.compareVectors(searchVector, y)))
         .toSeq
+    }
+
+
+    /*
+        Compares each vector with the query individually.
+    */
+    def getComparisonVectors(): Seq[ComparisonVectors] = {
+        documents
+        .map((id, document) => 
+            val vectorSearch = (document ++ query).toSet
+
+            new ComparisonVectors(
+                id, 
+                Phrases.compareVectors(vectorSearch, document),
+                Phrases.compareVectors(vectorSearch, query)
+            )
+        ).toSeq
+    }
+
+    /*
+        Iterates over each document individually comparing the document with the query.
+    */
+
+    def resultComparisonVectors(): SearcherResult = {
+        val spaceVector = getComparisonVectors()
+
+
+        val result = spaceVector
+        .map(x => new SearchVectorResult(
+            x.id,
+            SimilarityCosine.calculateSimilarityOfCosine(x.vectorSearch, x.query)
+        ))
+        .filter(x => x.id > 0)
+
+        new SearcherResult(result)
     }
 
     /*

@@ -14,4 +14,5 @@ import com.searcher.vsm._
   DocumentTable.pushQuery("Hello Guys")
 
   DocumentTable.result().show()
+  DocumentTable.resultComparisonVectors().show()
   
