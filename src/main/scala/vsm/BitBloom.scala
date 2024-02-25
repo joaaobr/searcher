@@ -5,15 +5,15 @@ import scala.collection.mutable.ArrayBuffer
 class BitBloom(size: Int, buffer: ArrayBuffer[Int]) {
     def this(size: Int) = this(size, ArrayBuffer.fill(size)(0))
 
-    def set(pos: Int) = {
-        buffer(pos) = buffer(pos) + 1
+    def set(position: Int) = {
+        buffer(position) = buffer(position) + 1
     }
 
-    def get(pos: Int): Int = {
-        buffer(pos)
+    def get(position: Int): Int = {
+        buffer(position)
     }
 
-    def isPresent(pos: Int): Boolean = {
-        buffer(pos) >= 1
+    def isPresent(position: Int): Boolean = {
+        buffer(position) >= 1
     }
 }

@@ -45,8 +45,9 @@ object SimilarityCosine {
             query -> (1, 1, 1)
     */
     def calculateNearestVector(vectors: Seq[SearchVector], query: Seq[Int]): Seq[SearchVectorResult] = {
-        vectors.map(x => 
-            new SearchVectorResult(x.id, calculateSimilarityOfCosine(x.vector, query))
+        vectors
+        .map(vector => 
+            new SearchVectorResult(vector.id, calculateSimilarityOfCosine(vector.vector, query))
         )
     }
 }

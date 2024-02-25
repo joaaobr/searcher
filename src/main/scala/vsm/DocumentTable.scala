@@ -13,7 +13,6 @@ case class ComparisonVectors(id: Int, vectorSearch: Seq[Int], query: Seq[Int])
 
 class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     private var currentId: Int = 0
-    private var query: Seq[String] = Seq()
     private var queryVector: Seq[Int] = Seq()
 
     def this() = this(new HashMap[Int, Seq[String]])
@@ -44,8 +43,11 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     def pushQuery(text: String) = {
         val document = Document.clear(text)
         incrementCurrentId
-        query = document
         documents.put(-1, document)
+    }
+
+    private def setQueryVector(searchVector: Set[String], query: Seq[String]) = {
+        queryVector = Phrases.compareVectors(searchVector, query)
     }
 
     /*
@@ -58,10 +60,12 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         .reduce((a, b) => a ++ b)
         .toSet
 
-        queryVector = Phrases.compareVectors(searchVector, query)
+        val query = documents.get(-1).get
+
+        setQueryVector(searchVector, query)
 
         documents
-        .map((x, y) => new SearchVector(x, Phrases.compareVectors(searchVector, y)))
+        .map((id, document) => new SearchVector(id, Phrases.compareVectors(searchVector, document)))
         .toSeq
     }
 
@@ -72,6 +76,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     def getComparisonVectors(): Seq[ComparisonVectors] = {
         documents
         .map((id, document) => 
+            val query = documents.get(-1).get
             val vectorSearch = (document ++ query).toSet
 
             new ComparisonVectors(
@@ -95,7 +100,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
             x.id,
             SimilarityCosine.calculateSimilarityOfCosine(x.vectorSearch, x.query)
         ))
-        .filter(x => x.id > 0)
+        .filter(vector => vector.id > 0)
 
         new SearcherResult(result)
     }
@@ -107,7 +112,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         val spaceVector = getSearchVectors()
 
         val result = SimilarityCosine.calculateNearestVector(spaceVector, queryVector)
-        .filter(x => x.id > 0)
+        .filter(vector => vector.id > 0)
         new SearcherResult(result)
     }
 }
