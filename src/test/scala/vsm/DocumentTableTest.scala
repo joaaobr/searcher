@@ -19,7 +19,7 @@ class DocumentTableTest extends munit.FunSuite {
     assert(result == expected)
   }
 
-  test("Insert document inconpatival") {
+  test("Insert document with low similarity") {
     val table = new DocumentTable()
     
     table.pushText("Document inconpatival")
@@ -30,7 +30,19 @@ class DocumentTableTest extends munit.FunSuite {
     assert(result == expected)
   }
 
-  test("Read file") {
+  test("Insert document with high similarity") {
+    val table = new DocumentTable()
+    
+    table.pushText("similarity")
+    table.pushQuery("similarity")
+
+    val result = table.result().first()
+    val expected = new SearchVectorResult(1, 1.0)
+    
+    assert(result == expected)
+  }
+
+  test("Insert and get file similarity") {
     val table = new DocumentTable()
     
     table.pushText("Document inconpatival")
@@ -43,7 +55,7 @@ class DocumentTableTest extends munit.FunSuite {
       new SearchVectorResult(1, 0.19069251784911848),
       new SearchVectorResult(2, 0.5645990940073806)
     )
-    
+
     assert(result == expected)
   }
 }
