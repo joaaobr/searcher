@@ -47,7 +47,6 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     */
     def pushQuery(text: String) = {
         val document = Document.clear(text)
-        incrementCurrentId
         documents.put(-1, document)
     }
 
