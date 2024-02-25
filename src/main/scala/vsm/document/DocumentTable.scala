@@ -50,6 +50,11 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         documents.put(-1, document)
     }
 
+    def pushQueryFile(file: String) = {
+        val document = new DocumentFile(file).read()
+        documents.put(-1, document)
+    }
+
 
     /*
         Based on the hash table, it creates a search vector and returns comparisons
