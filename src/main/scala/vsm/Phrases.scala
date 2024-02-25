@@ -2,16 +2,6 @@ package com.searcher.vsm
 import com.searcher.vsm.BloomFilter
 
 object Phrases {
-    /*
-        Removes repeated words from a sequence.
-
-        input -> (("hello", "world"), ("hello", "guys"))
-        output -> ("hello", "world", "guys")
-    */
-    def generateNonRepeatingSequenceOfPhrases(documents: Seq[String]): Set[String] = {
-        documents.toSet
-    }
-
     private def seqToBloom(set: Seq[String]): BloomFilter = {
         val newBloomFilter = new BloomFilter(set.size)
 
