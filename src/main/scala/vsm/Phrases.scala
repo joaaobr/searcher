@@ -1,8 +1,6 @@
 package com.searcher.vsm
 import com.searcher.vsm.BloomFilter
 
-case class SearcherVector(id: Int, searcherVector: Seq[Int])
-
 object Phrases {
     /*
         Removes repeated words from a sequence.
