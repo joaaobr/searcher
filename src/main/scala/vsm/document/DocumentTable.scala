@@ -76,38 +76,11 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
     }
 
 
-    /*
-        Compares each vector with the query individually.
-    */
-    def getComparisonVectors(): Seq[ComparisonVectors] = {
-        documents
-        .map((id, document) => 
-            val query = getQuery()
-            val vectorSearch = (document ++ query).toSet
-            
-            new ComparisonVectors(
-                id, 
-                Phrases.compareVectors(vectorSearch, document),
-                Phrases.compareVectors(vectorSearch, query)
-            )
-        )
-        .toSeq
-    }
-
-    /*
-        Iterates over each document individually comparing the document with the query.
-    */
 
     def resultComparisonVectors(): SearcherResult = {
-        val spaceVector = getComparisonVectors()
+        val individualComparisonVector = new IndividualComparisonVector(documents, getQuery())
 
-        val result = spaceVector
-        .map(x => new SearchVectorResult(
-            x.id,
-            SimilarityCosine.calculateSimilarityOfCosine(x.vectorSearch, x.query)
-        ))
-        .filter(vector => vector.id > 0)
-        new SearcherResult(result)
+        individualComparisonVector.resultComparisonVectors()
     }
 
     /*
