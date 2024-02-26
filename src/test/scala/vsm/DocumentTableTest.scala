@@ -85,8 +85,62 @@ class DocumentTableTest extends munit.FunSuite {
     val result = table.result().all()
 
     val expected = Seq(
-      SearchVectorResult(1,0.3913968438320653),
-      SearchVectorResult(2,0.0)
+      SearchVectorResult(1, 0.3913968438320653),
+      SearchVectorResult(2, 0.0)
+    )
+
+    assert(result == expected)
+  }
+
+  test("Insert and get file query similarity with comparison vector") {
+    val table = new DocumentTable()
+    
+    table.pushText("Lorem ipsum dolor sit amet.")
+    table.pushText("no")
+    table.pushQueryFile("query-file-test")
+
+    val result = table.resultComparisonVectors().all()
+
+    val expected = Seq(
+      SearchVectorResult(1, 0.3913968438320653),
+      SearchVectorResult(2, 0.0)
+    )
+
+    assert(result == expected)
+  }
+
+  test("Insert and get result with comparison vector") {
+    val table = new DocumentTable()
+    
+    table.pushText("Lorem ipsum dolor sit amet.")
+    table.pushText("no")
+    table.pushText("Lorem no")
+    table.pushText("Lorem")
+
+    table.pushQueryFile("query-file-test")
+
+    val result = table.resultComparisonVectors().all()
+
+    val expected = Seq(
+      SearchVectorResult(1, 0.3913968438320653),
+      SearchVectorResult(2, 0.0),
+      SearchVectorResult(3, 0.2526455763199557),
+      SearchVectorResult(4, 0.309426373877638)
+    )
+
+    assert(result == expected)
+  }
+
+  test("Insert document with high similarity with comparison vector") {
+    val table = new DocumentTable()
+
+    table.pushText("Equals")
+    table.pushQuery("Equals")
+
+    val result = table.resultComparisonVectors().all()
+
+    val expected = Seq(
+      SearchVectorResult(1, 1.0)
     )
 
     assert(result == expected)
