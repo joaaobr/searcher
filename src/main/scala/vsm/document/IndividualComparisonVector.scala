@@ -6,22 +6,25 @@ import scala.collection.mutable.HashMap
 /*
     This class is used to compare vectors with the query individually.
 */
-
 class IndividualComparisonVector(documents: HashMap[Int, Seq[String]], query: Seq[String]) {
+    private def removeQueryOfDocuments() = documents -= -1
+
     /*
         Compares each vector with the query individually.
     */
+    private def getVectorComparisonObject(id: Int, document: Seq[String]): ComparisonVectors = {
+        val vectorSearch = (document ++ query).toSet
+
+        new ComparisonVectors(
+            id, 
+            Phrases.compareVectors(vectorSearch, document),
+            Phrases.compareVectors(vectorSearch, query)
+        )
+    }
+
     private def getComparisonVectors(): Seq[ComparisonVectors] = {
         documents
-        .map((id, document) =>
-            val vectorSearch = (document ++ query).toSet
-            
-            new ComparisonVectors(
-                id, 
-                Phrases.compareVectors(vectorSearch, document),
-                Phrases.compareVectors(vectorSearch, query)
-            )
-        )
+        .map(getVectorComparisonObject)
         .toSeq
     }
 
@@ -30,14 +33,14 @@ class IndividualComparisonVector(documents: HashMap[Int, Seq[String]], query: Se
     */
 
     def resultComparisonVectors(): SearcherResult = {
+        removeQueryOfDocuments()
         val spaceVector = getComparisonVectors()
 
         val result = spaceVector
-        .map(x => new SearchVectorResult(
-            x.id,
-            SimilarityCosine.calculateSimilarityOfCosine(x.vectorSearch, x.query)
+        .map(comparisonVectors => new SearchVectorResult(
+            comparisonVectors.id,
+            SimilarityCosine.calculateSimilarityOfCosine(comparisonVectors.vectorSearch, comparisonVectors.query)
         ))
-        .filter(vector => vector.id > 0)
         new SearcherResult(result)
     }
 }
