@@ -3,6 +3,8 @@ package com.searcher.vsm.document
 import com.searcher.vsm._
 import scala.collection.mutable.HashMap
 
+case class ComparisonVectors(id: Int, vectorSearch: Seq[Int], query: Seq[Int])
+
 /*
     This class is used to compare vectors with the query individually.
 */

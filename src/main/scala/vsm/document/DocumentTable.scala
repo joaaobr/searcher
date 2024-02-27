@@ -5,8 +5,6 @@ import com.searcher.vsm._
 
 case class SearchVector(id: Int, vector: Seq[Int])
 
-case class ComparisonVectors(id: Int, vectorSearch: Seq[Int], query: Seq[Int])
-
 /*
     This module is used to store documents and perform searches based on the vector space model.
 */
