@@ -32,15 +32,14 @@ class IndividualComparisonVector(documents: HashMap[Int, Seq[String]], query: Se
         Iterates over each document individually comparing the document with the query.
     */
 
-    def resultComparisonVectors(): SearcherResult = {
+    def resultComparisonVectors(): Seq[SearchVectorResult] = {
         removeQueryOfDocuments()
         val spaceVector = getComparisonVectors()
 
-        val result = spaceVector
+        spaceVector
         .map(comparisonVectors => new SearchVectorResult(
             comparisonVectors.id,
             SimilarityCosine.calculateSimilarityOfCosine(comparisonVectors.vectorSearch, comparisonVectors.query)
         ))
-        new SearcherResult(result)
     }
 }

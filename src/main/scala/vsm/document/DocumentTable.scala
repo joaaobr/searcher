@@ -79,8 +79,9 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
 
     def resultComparisonVectors(): SearcherResult = {
         val individualComparisonVector = new IndividualComparisonVector(documents, getQuery())
+        val result = individualComparisonVector.resultComparisonVectors()
 
-        individualComparisonVector.resultComparisonVectors()
+        new SearcherResult(result)
     }
 
     /*
