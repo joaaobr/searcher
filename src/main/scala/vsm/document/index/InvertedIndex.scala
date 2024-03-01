@@ -10,7 +10,7 @@ class InvertedIndex {
     val index: HashMap[String, Set[Int]] = new HashMap[String, Set[Int]]
 
     def get(key: String): Set[Int] = {
-        index.get(key).get
+        index.getOrElseUpdate(key, Set())
     }
 
     def insertSeq(keys: Seq[String], value: Int) = {
@@ -19,13 +19,13 @@ class InvertedIndex {
     }
 
     def update(key: String, id: Int) = {
-        val ids = index.getOrElseUpdate(key, Set()) ++ Set(id)
+        val ids = get(key) ++ Set(id)
         index.update(key, ids)
     }
 
-    def getKeys(keys: Seq[String]) = {
+    def getKeys(keys: Seq[String]): Set[Int] = {
         keys
-        .map(key => index.getOrElseUpdate(key, Set()))
+        .map(key => get(key))
         .reduce((a, b) => a ++ b)
         .toSet
     }
