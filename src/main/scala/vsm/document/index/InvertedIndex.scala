@@ -27,6 +27,5 @@ class InvertedIndex {
         keys
         .map(key => get(key))
         .reduce((a, b) => a ++ b)
-        .toSet
     }
 }
