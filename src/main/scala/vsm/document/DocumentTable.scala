@@ -99,7 +99,7 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         val query = getQuery()
 
         val documentsIndexed = indexer
-        .getKeys(query)
+        .getIds(query)
         .toSeq
         .map(id => (id, documents.getOrElseUpdate(id, Seq())))
         .toMap

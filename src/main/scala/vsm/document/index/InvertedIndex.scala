@@ -23,7 +23,7 @@ class InvertedIndex {
         index.update(key, ids)
     }
 
-    def getKeys(keys: Seq[String]): Set[Int] = {
+    def getIds(keys: Seq[String]): Set[Int] = {
         keys
         .map(key => get(key))
         .reduce((a, b) => a ++ b)
