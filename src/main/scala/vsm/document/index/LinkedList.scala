@@ -14,7 +14,7 @@ class LinkedList[T](value: T) {
     def isPresent: Boolean = !isEmpty
 
     private def insert0(value: T, currentNode: LinkedList[T]): LinkedList[T] = {
-        if(currentNode.next.isPresent) {
+        if(currentNode.next != null) {
             return insert0(value, currentNode.next)
         }
 
