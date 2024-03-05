@@ -9,8 +9,12 @@ class LinkedList[T](value: T) {
         next = n.next
     }
 
+    def isEmpty: Boolean = current == null
+
+    def isPresent: Boolean = !isEmpty
+
     private def insert0(value: T, currentNode: LinkedList[T]): LinkedList[T] = {
-        if(currentNode.next != null) {
+        if(currentNode.next.isPresent) {
             return insert0(value, currentNode.next)
         }
 
@@ -36,7 +40,7 @@ class LinkedList[T](value: T) {
     }
 
     private def getByOrElse0(f: T => Boolean, currentNode: LinkedList[T], default: T): T = {
-        if(currentNode == null) {
+        if(currentNode.isEmpty) {
             return default
         }
         
@@ -53,7 +57,7 @@ class LinkedList[T](value: T) {
     }
 
     def update0(f: T => T, currentNode: LinkedList[T], newLinkedList: LinkedList[T]): LinkedList[T] = {
-        if(currentNode == null) {
+        if(currentNode.isEmpty) {
             return newLinkedList
         }
 
@@ -67,10 +71,10 @@ class LinkedList[T](value: T) {
     }
 
     def update1(f: T => Boolean, newValue: T, currentNode: LinkedList[T], newLinkedList: LinkedList[T]): LinkedList[T] = {
-        if(currentNode == null) {
+        if(currentNode.isEmpty) {
             return newLinkedList
         }
-        
+
         val operation: Boolean = f(currentNode.current)
         if(operation) {
             newLinkedList.current = newValue

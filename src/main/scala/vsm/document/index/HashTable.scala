@@ -36,6 +36,4 @@ class HashTable[K, V](size: Int) {
       array(index) = array(index).update(value => value.key == key, new Value(value, key))
     }
   }
-
-  // def insertOrUpdate(key: K, value: V)
 }
