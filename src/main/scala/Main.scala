@@ -1,5 +1,6 @@
 import com.searcher.vsm._
 import com.searcher.vsm.document.DocumentTable
+import com.searcher.vsm.document.index._
 
 @main def hello(): Unit =
   val DocumentTable = new DocumentTable()
@@ -15,5 +16,4 @@ import com.searcher.vsm.document.DocumentTable
   DocumentTable.pushQuery("Hello Guys")
 
   DocumentTable.result().show()
-  DocumentTable.resultComparisonVectors().show()
-  
+  DocumentTable.resultWithIndex().show()

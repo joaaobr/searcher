@@ -1,16 +1,18 @@
 package com.searcher.vsm.document.index
 
 import scala.collection.mutable.HashMap
+import com.searcher.vsm.document.index._
+
 
 /*
     This module is used to index phrases and to facilitate the search and obtain the closest documents.
 */
 
 class InvertedIndex {
-    val index: HashMap[String, Set[Int]] = new HashMap[String, Set[Int]]
+    val index: HashTable[String, Set[Int]] = new HashTable[String, Set[Int]](500)
 
     def get(key: String): Set[Int] = {
-        index.getOrElseUpdate(key, Set())
+        index.get(key, new Value(Set(), "empty")).value
     }
 
     def insertSeq(keys: Seq[String], value: Int) = {
