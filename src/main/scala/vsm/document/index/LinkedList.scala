@@ -39,6 +39,22 @@ class LinkedList[T](value: T) {
         get0(value, this)
     }
 
+    private def getOrElse0(value: T, default: T, currentNode: LinkedList[T]): T = {
+        if(currentNode == null) {
+            return default
+        }
+
+        if(currentNode.current == value) {
+            return value
+        }
+
+        return getOrElse0(value, default, currentNode.next)
+    }
+
+    def getOrElse(value: T, default: T): T = {
+        getOrElse0(value, default, this)
+    }
+
     private def getByOrElse0(f: T => Boolean, currentNode: LinkedList[T], default: T): T = {
         if(currentNode == null) {
             return default

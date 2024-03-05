@@ -22,6 +22,7 @@ class HashTable[K, V](size: Int) {
 
   def get(key: K, default: Value[K, V]): Value[K, V] = {
     val index = hash(key)
+
     if(array(index) == null) {
       return default
     }
@@ -30,6 +31,7 @@ class HashTable[K, V](size: Int) {
 
   def update(key: K, value: V) = {
     val index = hash(key)
+
     if(array(index) == null) {
       put(key, value)
     } else {
