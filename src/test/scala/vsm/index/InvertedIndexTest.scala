@@ -22,7 +22,7 @@ class InvertedIndexTest extends munit.FunSuite {
     assert(result == expected)
   }
 
-  test("Find value with multiples ids") {
+  test("Find key with multiples ids") {
     val indexer = new InvertedIndex()
     val preset = Seq("key")
 
@@ -36,7 +36,7 @@ class InvertedIndexTest extends munit.FunSuite {
     assert(result == expected)
   }
 
-  test("Find value with multiples ids") {
+  test("Find keys with multiples ids") {
     val indexer = new InvertedIndex()
     val preset = Seq("key")
     val preset2 = Seq("word")
