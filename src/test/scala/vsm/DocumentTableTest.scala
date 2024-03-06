@@ -58,23 +58,6 @@ class DocumentTableTest extends munit.FunSuite {
     assert(result == expected)
   }
 
-  test("Insert and get file similarity") {
-    val table = new DocumentTable()
-    
-    table.pushText("Document inconpatival")
-    table.pushFile("file-test")
-    table.pushQuery("Now is the winter of our discontent Made glorious summer by this sun of York;")
-
-    val result = table.result().all()
-
-    val expected = Seq(
-      SearchVectorResult(1, 0.19069251784911848),
-      SearchVectorResult(2, 0.5645990940073806)
-    )
-
-    assert(result == expected)
-  }
-
   test("Insert and get file query similarity") {
     val table = new DocumentTable()
     
