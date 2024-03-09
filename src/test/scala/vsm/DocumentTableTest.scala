@@ -128,4 +128,19 @@ class DocumentTableTest extends munit.FunSuite {
 
     assert(result == expected)
   }
+
+  test("Insert empty document and empty") {
+    val table = new DocumentTable()
+
+    table.pushText("HÈLlÔ")
+    table.pushQuery("hello")
+
+    val result = table.result().all()
+
+    val expected = Seq(
+      SearchVectorResult(1, 1.0)
+    )
+
+    assert(result == expected)
+  }
 }
