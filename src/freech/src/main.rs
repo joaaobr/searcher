@@ -32,7 +32,6 @@ struct FreechTree {
     low: Option<Node>,
     medium: Option<NodeMedium>,
     high: Option<Node>,
-    is_full: bool,
     length: u8,
 }
 
@@ -42,7 +41,6 @@ impl FreechTree {
             low: None,
             medium: None,
             high: None,
-            is_full: false,
             length: 0,
         }
     }
@@ -52,7 +50,6 @@ impl FreechTree {
             low: None,
             medium: Some(NodeMedium::new(value)),
             high: None,
-            is_full: false,
             length: 0,
         }
     }
@@ -71,6 +68,9 @@ impl FreechTree {
 
     fn split_node(&mut self, value: i64) {
         // Check if it is lower than low.
+        // println!("LOWWW: {}", self.low.get_or_insert(*Box::new(Node::new())).value);
+        // println!("MEIUMM: {}", self.medium.get_or_insert(*Box::new(NodeMedium::new(-25))).value);
+        // println!("HIGHH: {}", self.high.get_or_insert(*Box::new(Node::new())).value);
 
         /*
             low: 15
@@ -80,6 +80,8 @@ impl FreechTree {
             The value in this case is lower than medium and low.
 
             low.child = value/10
+
+            FIX THIS CODE!
         */
         if self.is_less_medium(value) && self.is_less_low(value) {
             let new_node = Node::new();
@@ -89,7 +91,21 @@ impl FreechTree {
         }
 
         if let Some(medium) = self.medium.take() {
-            if value > medium.value {
+            if value > medium.value && self.is_high(value) {
+                let high = self.high.take().unwrap();
+                let low = self.low.take().unwrap();
+
+                let mut left = Box::new(FreechTree::new_medium(medium.value));
+                left.low = Some(Node { value: low.value, child: None });
+
+                let right = Box::new(FreechTree::new_medium(value));
+                
+                self.medium = Some(NodeMedium {
+                    value: high.value,
+                    left: Some(left),
+                    right: Some(right),
+                });
+            } else if value > medium.value {
                 let low = self.low.take().unwrap();
 
                 let left = Box::new(FreechTree::new_medium(low.value));
@@ -100,9 +116,8 @@ impl FreechTree {
                     left: Some(left),
                     right: Some(right),
                 });
-            }
-
-            if value < medium.value {
+                
+            } else if value < medium.value {
                 let low = self.low.take().unwrap();
 
                 if value < low.value {
@@ -127,30 +142,39 @@ impl FreechTree {
                     });
                 }
 
-                self.low = Some(Node {
-                    value: 0,
-                    child: Some(Box::new(FreechTree::new())),
-                });
+                self.low = None;
+                self.high = None;
             }
         }
     }
 
     fn swap(&mut self, value: i64) {
         if let Some(medium) = self.medium.take() {
-            // medium: 10 value: 15
-            if value > medium.value {
-                let low = Some(Node {
+
+            if value > medium.value  && self.length == 2  {
+                let new_high = Some(Node {
+                    value,
+                    child: None,
+                });
+
+                // self.low = low;
+                self.high = new_high;
+                self.medium = Some(medium);
+            } else if value > medium.value{
+                // medium: 10 value: 15
+                let new_low = Some(Node {
                     value: medium.value,
-                    child: Some(Box::new(FreechTree::new())),
+                    child: None,
                 });
 
                 let new_medium = Some(NodeMedium {
                     value,
-                    left: medium.left,
-                    right: medium.right
+                    left: None,
+                    right: None,
                 });
 
-                self.low = low;
+                // self.low = low;
+                self.low = new_low;
                 self.medium = new_medium;
             } else if medium.value > value {
                 // medium: 15 value: 10
@@ -177,16 +201,7 @@ impl FreechTree {
                                 value: medium.value,
                                 child: Some(Box::new(FreechTree::new()))
                             }); 
-                        }
-                            
-
-                        // let mut new_fretch = FreechTree {
-                        //     low: new_low,
-                        //     medium: new_medium,
-                        //     high,
-                        //     is_full: true,
-                        //     length: self.length + 1
-                        // };
+                        }             
                     } else {
                         println!("POWWW")
                     }
@@ -222,20 +237,28 @@ impl FreechTree {
     }
 
     fn print(&mut self) {
-        println!("M: {}", self.medium.get_or_insert(*Box::new(NodeMedium::new(5))).value);
-        println!("L: {}", self.low.get_or_insert(*Box::new(Node::new())).value);
-        println!("H: {}", self.high.get_or_insert(*Box::new(Node::new())).value)
+        println!("{}", self.medium.get_or_insert(*Box::new(NodeMedium::new(5))).value);
     }
 }
 
 fn main() {
-    let mut a = FreechTree::new();
+    let mut freech_tree = FreechTree::new();
 
-    a.insert(10);
-    a.insert(15);
-    a.insert(30);
-    a.insert(31);
-    a.print();
+    freech_tree.insert(10);
+    freech_tree.insert(15);
+    freech_tree.insert(30);
+    freech_tree.insert(31);
+    // pirnt current medium
+    freech_tree.print();
 
-    println!("Hello, world!");
+    // print left medium
+    freech_tree.medium.get_or_insert(*Box::new(NodeMedium::new(5))).left.get_or_insert(Box::new(*Box::new(FreechTree::new()))).print();
+    // print low left medium
+    
+    println!("LEFT LOWW: {}", freech_tree.medium.get_or_insert(*Box::new(NodeMedium::new(5))).left.get_or_insert(Box::new(*Box::new(FreechTree::new()))).low
+    .get_or_insert(*Box::new(Node::new())).value);
+
+    // print right medium
+    freech_tree.medium.get_or_insert(*Box::new(NodeMedium::new(5))).right.get_or_insert(Box::new(*Box::new(FreechTree::new()))).print();
+
 }
