@@ -3,17 +3,16 @@ import com.searcher.vsm.document.DocumentTable
 import com.searcher.vsm.document.index._
 
 @main def hello(): Unit =
-  val DocumentTable = new DocumentTable()
+  val documentTable = new DocumentTable()
   
-  DocumentTable.pushText("Hello World")
-  DocumentTable.pushFile("file-test")
-  DocumentTable.pushText("HèllÔ, Guys")
-  DocumentTable.pushText("Hello Main")
-  DocumentTable.pushText("HÉllo Man Guys World")
-  DocumentTable.pushText("Hello hello")
-  DocumentTable.pushText("Hello guys guys hello hello guys hello")
+  documentTable.pushText("Hello World")
+  documentTable.pushText("Hello Guys")
+  documentTable.pushText("Hello Main")
+  documentTable.pushText("Hello Man Guys World")
+  documentTable.pushText("Hello hello")
+  documentTable.pushText("Hello guys guys hello hello guys hello")
 
-  DocumentTable.pushQuery("Hello Guys")
+  documentTable.pushQuery("Hello Guys")
 
-  DocumentTable.result().show()
-  DocumentTable.resultWithIndex().show()
+  // DocumentTable.result().show()
+  documentTable.resultWithIndex().show()
