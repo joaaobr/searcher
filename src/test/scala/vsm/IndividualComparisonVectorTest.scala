@@ -9,7 +9,7 @@ class IndividualComparisonVectorTest extends munit.FunSuite {
         2 -> Seq("AC", "CD"),
     )
 
-    val table = new IndividualComparisonVector(documents, Seq("AB", "b"))
+    val table = new IndividualComparisonVector(Seq("AB", "b"), documents.toMap)
 
     val result = table.resultComparisonVectors()
 
@@ -26,7 +26,7 @@ class IndividualComparisonVectorTest extends munit.FunSuite {
         1 -> Seq("equals"),
     )
 
-    val table = new IndividualComparisonVector(documents, Seq("equals"))
+    val table = new IndividualComparisonVector(Seq("equals"), documents.toMap)
 
     val result = table.resultComparisonVectors()
 
@@ -42,7 +42,7 @@ class IndividualComparisonVectorTest extends munit.FunSuite {
         1 -> Seq("equals"),
     )
 
-    val table = new IndividualComparisonVector(documents, Seq("not"))
+    val table = new IndividualComparisonVector(Seq("not"), documents.toMap)
 
     val result = table.resultComparisonVectors()
 
@@ -59,7 +59,7 @@ class IndividualComparisonVectorTest extends munit.FunSuite {
         2 -> Seq("equals", "equals")
     )
 
-    val table = new IndividualComparisonVector(documents, Seq("equals"))
+    val table = new IndividualComparisonVector(Seq("equals"), documents.toMap)
 
     val result = table.resultComparisonVectors()
 

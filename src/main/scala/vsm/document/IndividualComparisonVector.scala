@@ -8,9 +8,7 @@ case class ComparisonVectors(id: Int, vectorSearch: Seq[Int], query: Seq[Int])
 /*
     This class is used to compare vectors with the query individually.
 */
-class IndividualComparisonVector(documents: HashMap[Int, Seq[String]], query: Seq[String]) {
-    private def removeQueryOfDocuments() = documents -= -1
-
+class IndividualComparisonVector(query: Seq[String], documents: Map[Int, Seq[String]]) {
     /*
         Compares each vector with the query individually.
     */
@@ -26,6 +24,7 @@ class IndividualComparisonVector(documents: HashMap[Int, Seq[String]], query: Se
 
     private def getComparisonVectors(): Seq[ComparisonVectors] = {
         documents
+        .filter((id, _) => id > 0)
         .map(getVectorComparisonObject)
         .toSeq
     }
@@ -35,7 +34,6 @@ class IndividualComparisonVector(documents: HashMap[Int, Seq[String]], query: Se
     */
 
     def resultComparisonVectors(): Seq[SearchVectorResult] = {
-        removeQueryOfDocuments()
         val spaceVector = getComparisonVectors()
 
         spaceVector

@@ -1,9 +1,16 @@
 import com.searcher.vsm.document._
 import com.searcher.vsm._
+import vsm.Config
 
 class DocumentTableTest extends munit.FunSuite {
+  val presetIndex = new Config().default()
+  val presetIndIvidualComparison = new Config().defaultIndividualComparison()
+
+  val defaultPreset = new Config()
+  defaultPreset.setInvertedIndex(false)
+
   test("Insert document and get result") {
-    val table = new DocumentTable()
+    val table = new DocumentTable(defaultPreset)
 
     table.pushText("This is failure")
     table.pushText("This is ok")
@@ -19,7 +26,7 @@ class DocumentTableTest extends munit.FunSuite {
   }
 
   test("Insert document with low similarity") {
-    val table = new DocumentTable()
+    val table = new DocumentTable(defaultPreset)
     
     table.pushText("Document inconpatival")
     table.pushQuery("Testing")
@@ -42,7 +49,7 @@ class DocumentTableTest extends munit.FunSuite {
   }
 
   test("Insert and get file similarity") {
-    val table = new DocumentTable()
+    val table = new DocumentTable(defaultPreset)
     
     table.pushText("Document inconpatival")
     table.pushFile("file-test")
@@ -59,7 +66,7 @@ class DocumentTableTest extends munit.FunSuite {
   }
 
   test("Insert and get file query similarity") {
-    val table = new DocumentTable()
+    val table = new DocumentTable(defaultPreset)
     
     table.pushText("Lorem ipsum dolor sit amet.")
     table.pushText("no")
@@ -76,13 +83,18 @@ class DocumentTableTest extends munit.FunSuite {
   }
 
   test("Insert and get file query similarity with comparison vector") {
-    val table = new DocumentTable()
+    val settings = new Config()
+
+    settings.setInvertedIndex(false)
+    settings.setIndividualComparisonVector(true)
+
+    val table = new DocumentTable(settings)
     
     table.pushText("Lorem ipsum dolor sit amet.")
     table.pushText("no")
     table.pushQueryFile("query-file-test")
 
-    val result = table.resultComparisonVectors().all()
+    val result = table.result().all()
 
     val expected = Seq(
       SearchVectorResult(1, 0.3913968438320653),
@@ -93,7 +105,12 @@ class DocumentTableTest extends munit.FunSuite {
   }
 
   test("Insert and get result with comparison vector") {
-    val table = new DocumentTable()
+    val settings = new Config()
+
+    settings.setInvertedIndex(false)
+    settings.setIndividualComparisonVector(true)
+
+    val table = new DocumentTable(settings)
     
     table.pushText("Lorem ipsum dolor sit amet.")
     table.pushText("no")
@@ -102,7 +119,7 @@ class DocumentTableTest extends munit.FunSuite {
 
     table.pushQueryFile("query-file-test")
 
-    val result = table.resultComparisonVectors().all()
+    val result = table.result().all()
 
     val expected = Seq(
       SearchVectorResult(1, 0.3913968438320653),
@@ -115,12 +132,16 @@ class DocumentTableTest extends munit.FunSuite {
   }
 
   test("Insert document with high similarity with comparison vector") {
-    val table = new DocumentTable()
+    val settings = new Config()
+
+    settings.setInvertedIndex(false)
+    settings.setIndividualComparisonVector(true)
+    val table = new DocumentTable(settings)
 
     table.pushText("Equals")
     table.pushQuery("Equals")
 
-    val result = table.resultComparisonVectors().all()
+    val result = table.result().all()
 
     val expected = Seq(
       SearchVectorResult(1, 1.0)

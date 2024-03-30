@@ -3,6 +3,9 @@ package com.searcher.vsm.document
 import scala.collection.mutable.HashMap
 import com.searcher.vsm._
 import com.searcher.vsm.document.index.InvertedIndex
+import vsm.ConfigSets
+import vsm.Config
+import scala.collection.Searching.SearchResult
 
 case class SearchVector(id: Int, vector: Seq[Int])
 
@@ -10,12 +13,16 @@ case class SearchVector(id: Int, vector: Seq[Int])
     This module is used to store documents and perform searches based on the vector space model.
 */
 
-class DocumentTable(documents: HashMap[Int, Seq[String]]) {
+class DocumentTable(documents: HashMap[Int, Seq[String]], settings: ConfigSets) {
     private var currentId: Int = 0
     private var queryVector: Seq[Int] = Seq()
     private val indexer: InvertedIndex = InvertedIndex()
 
-    def this() = this(new HashMap[Int, Seq[String]])
+    def this() = this(new HashMap[Int, Seq[String]], new Config().default())
+
+    def this(settings: ConfigSets) = this(new HashMap[Int, Seq[String]], settings)
+
+    def this(settings: Config) = this(new HashMap[Int, Seq[String]], settings.get())
 
     private def incrementCurrentId = {
         currentId += 1
@@ -57,12 +64,25 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         documents.put(-1, document)
     }
 
+    def getDocumentsByIndex(): Map[Int, Seq[String]] = {
+        val query = getQuery()
 
-    /*
-        Based on the hash table, it creates a search vector and returns comparisons
-        between the search vector and the documents.
-    */
-    def getSearchVectors(): Seq[SearchVector] = {
+        indexer
+        .getIds(query)
+        .toSeq
+        .map(id => (id, documents.getOrElseUpdate(id, Seq())))
+        .toMap
+    }
+
+    private def getDocuments(): Map[Int, Seq[String]] = {
+        if(settings.invertedIndex) {
+            return getDocumentsByIndex()
+        } else {
+           return documents.toMap
+        }
+    }
+
+    def getSearchVectors(documents: Map[Int, Seq[String]]): Seq[SearchVector] = {
         val searchVector = documents
         .map((_, document) => document)
         .reduce((a, b) => a ++ b)
@@ -77,51 +97,22 @@ class DocumentTable(documents: HashMap[Int, Seq[String]]) {
         .toSeq
     }
 
-    def resultComparisonVectors(): SearcherResult = {
-        val individualComparisonVector = new IndividualComparisonVector(documents, getQuery())
-        val result = individualComparisonVector.resultComparisonVectors()
+    def getSearchResult(documents: Map[Int, Seq[String]]): SearcherResult = {
+        if(settings.individualComparisonVector) {
+            val individualComparisonVector = new IndividualComparisonVector(getQuery(), documents)
+            val result = individualComparisonVector.resultComparisonVectors()
 
-        new SearcherResult(result)
+            return new SearcherResult(result)
+        } else {
+            val result = SimilarityCosine.calculateNearestVector(getSearchVectors(documents), queryVector)
+            .filter(vector => vector.id > 0)
+            return new SearcherResult(result)
+        }
     }
 
-    /*
-        Returns the similarity of the search vectors with the query.
-    */
     def result(): SearcherResult = {
-        val spaceVector = getSearchVectors()
+        val documents = getDocuments()
 
-        val result = SimilarityCosine.calculateNearestVector(spaceVector, queryVector)
-        .filter(vector => vector.id > 0)
-        new SearcherResult(result)
-    }
-
-    def getSearchVectorsWithIndex(): Seq[SearchVector] = {
-        val query = getQuery()
-
-        val documentsIndexed = indexer
-        .getIds(query)
-        .toSeq
-        .map(id => (id, documents.getOrElseUpdate(id, Seq())))
-        .toMap
-
-        val searchVector = documentsIndexed
-        .map((_, document) => document)
-        .reduce((a, b) => a ++ b)
-        .toSet
-
-
-        setQueryVector(searchVector, query)
-
-        documentsIndexed
-        .map((id, document) => new SearchVector(id, Phrases.compareVectors(searchVector, document)))
-        .toSeq
-    }
-
-    def resultWithIndex(): SearcherResult = {
-        val spaceVector = getSearchVectorsWithIndex()
-
-        val result = SimilarityCosine.calculateNearestVector(spaceVector, queryVector)
-        .filter(vector => vector.id > 0)
-        new SearcherResult(result)
+        getSearchResult(documents)
     }
 }
