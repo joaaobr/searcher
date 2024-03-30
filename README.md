@@ -32,23 +32,6 @@ Searcher is a study project with the objective of using VSM (Vector Space Model)
 ## Result:
 ```scala
   Id  Similarity
-  1   0.6666666666666667
-  2   1.0000000000000002
-  3   0.6666666666666667
-  4   0.8660254037844387
-  5   0.8164965809277259
-  6   0.8082903768654761
-```
-
-
-#### Execute the query with inverted index:
-```scala
-  documentTable.resultWithIndex().show()
-```
-
-## Result:
-```scala
-  Id  Similarity
   5   0.8164965809277259
   1   0.6666666666666667
   6   0.8082903768654761
