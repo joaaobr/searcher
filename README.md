@@ -40,7 +40,7 @@ Searcher is a study project with the objective of using VSM (Vector Space Model)
   4   0.8660254037844387
 ```
 
-## Running Test:
-```
-  sbt test
-```
+## How does Searcher work behind the scenes??
+<img src="https://github.com/joaaobr/searcher/blob/main/docs/first_step.png">
+
+<p>In the first step, we process the input by removing accents and punctuations and converting all letters to lowercase. Immediately after that, we index the sentences into an Inverted Index.</p>
